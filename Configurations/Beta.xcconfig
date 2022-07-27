@@ -1,0 +1,11 @@
+
+BUNDLE_DISPLAY_NAME = Beta
+
+PRODUCT_BUNDLE_IDENTIFIER = com.amce.beta.BetaProd
+
+ASSETCATALOG_COMPILER_APPICON_NAME = BetaAppIcon
+
+// Used with #ifdef in Swift code
+BUILD_WIDGETS = YES
+
+APP_API_HOSTNAME = beta.api.acme.com
