@@ -107,7 +107,25 @@ xcodebuild -project BetaProd.xcodeproj -scheme "BetaProd (Prod)" build
 
 ## Build Schemes
 
-The call to `set-environment.sh` is done in a pre-action script with the build schemes. Edit a build scheme and expand the Build section to see the pre-actions. It will need the build settings from the project so that `PROJECT_DIR` is defined to run the script. More build schemes can be created along with more Xcode config files to support them.
+The call to `set-environment.sh` is done in a pre-action script with the Build Schemes. These changes must be made before the build starts. Edit a Build Scheme and expand the Build section to see the pre-actions. It will need the build settings from the project so that `PROJECT_DIR` is defined to run the script. More build schemes can be created along with more Xcode config files to support them. The `set-environment.sh` script can also be run from the root directory.
+
+```sh
+./scripts/set-environment.sh Beta
+```
+
+Review the files for the App Icon, cloud configuration files and Active.xcconfig to confirm the changes. Then run it again to change to Prod.
+
+```sh
+./scripts/set-environment.sh Prod
+```
+
+The Build Schemes also run these scripts prior to the Xcode build so the work done will not appear in the normal build logs. Running the script from the root directory is the way to debug any updates to the script.
+
+```sh
+./scripts/set-environment.sh Gamma
+```
+
+Running the command with a build variant which is not supported due to missing files or directories will cause the script to exit early. To confirm that the script has run successfully, view the AppIcon files which will hot reload in Xcode and show the changed images. The same can be done for the cloud configuration file and Active.xcconfig.
 
 ## Active Xcode Config
 

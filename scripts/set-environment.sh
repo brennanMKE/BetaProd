@@ -10,6 +10,7 @@ TARGET_ENVIRONMENT="$1"
 
 # If PROJECT_DIR not set or null, use current directory.
 ROOT_DIR=${PROJECT_DIR:-.}
+
 XCODE_CONFIG_DIR="${ROOT_DIR}/Configurations"
 CLOUD_CONFIG_DIR="${ROOT_DIR}/Cloud"
 APP_ICON_DIR="${ROOT_DIR}/AppIcon"
@@ -17,10 +18,6 @@ APP_ICON_DIR="${ROOT_DIR}/AppIcon"
 # Use `Prod` as default environment if one not exist
 if [ -z "${TARGET_ENVIRONMENT}" ]; then
     TARGET_ENVIRONMENT="Prod"
-fi
-
-if [ -z "${SRCROOT}" ]; then
-    SRCROOT="${ROOT_DIR}"
 fi
 
 if [ -z "${INFOPLIST_FILE}" ]; then
@@ -36,7 +33,7 @@ copy_xcode_config() {
         echo "#include \"${TARGET_ENVIRONMENT}.xcconfig\"" >> "${DESTINATION}"
 
         # Tell Xcode to regenerate info.plist.
-        touch "${SRCROOT}/${INFOPLIST_FILE}"
+        touch "${ROOT_DIR}/${INFOPLIST_FILE}"
     else
         echo "error: Unsupported environment: ${TARGET_ENVIRONMENT}. File not found: ${SOURCE}"
         exit 1
@@ -45,7 +42,7 @@ copy_xcode_config() {
 
 copy_cloud_config() {
     local SOURCE="${CLOUD_CONFIG_DIR}/${TARGET_ENVIRONMENT}"
-    local DESTINATION="${SRCROOT}/BetaProd/Cloud"
+    local DESTINATION="${ROOT_DIR}/BetaProd/Cloud"
 
     if [ -d "${SOURCE}" ]; then
         mkdir -p "${DESTINATION}"
@@ -59,7 +56,7 @@ copy_cloud_config() {
 
 copy_app_icon() {
     local SOURCE="${APP_ICON_DIR}/${TARGET_ENVIRONMENT}AppIcon.appiconset"
-    local DESTINATION="${SRCROOT}/BetaProd/Assets.xcassets/AppIcon.appiconset"
+    local DESTINATION="${ROOT_DIR}/BetaProd/Assets.xcassets/AppIcon.appiconset"
 
     if [ -d "${SOURCE}" ]; then
         mkdir -p "${DESTINATION}"
