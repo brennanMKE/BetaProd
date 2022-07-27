@@ -6,13 +6,9 @@ In this demo there are 2 Build Schemes. One for Beta and another for Prod. The p
 
 ## App Icon
 
-One use for it is to set the name of the App Icon. You can use [Bakery] to create icons for each variant so you can see which app you can run.
+One use for it is to change images asssets for the App Icon. You can use [Bakery] to create icons for each variant so you can see which app you can run. There are 2 icon sets define in the `AppIcon` folder. The script which changes the Xcode config files also copies these files in place for the App Icon. More variants could be created and placed in the `AppIcon` folder.
 
-```sh
-ASSETCATALOG_COMPILER_APPICON_NAME = BetaAppIcon
-```
-
-The asset catalog in the Xcode project defines both `BetaAppIcon` and `ProdAppIcon`. When these values are defined in Xcode config files they must be set to use `Active.xcconfig` which will import `Beta.xcconfig` or `Prod.xcconfig`.
+Note: Once the default icon set is added to source control the files can be ignored so that when files are change with the build they won't show up as changes. use `scripts/ignore-icon-changes.sh` to ignore changes for these files.
 
 ![Configurations](XcodeConfiguarations.png)
 

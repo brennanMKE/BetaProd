@@ -10,8 +10,9 @@ TARGET_ENVIRONMENT="$1"
 
 # If PROJECT_DIR not set or null, use current directory.
 ROOT_DIR=${PROJECT_DIR:-.}
-CLOUD_CONFIG_DIR="${ROOT_DIR}/Cloud"
 XCODE_CONFIG_DIR="${ROOT_DIR}/Configurations"
+CLOUD_CONFIG_DIR="${ROOT_DIR}/Cloud"
+APP_ICON_DIR="${ROOT_DIR}/AppIcon"
 
 # Use `Prod` as default environment if one not exist
 if [ -z "${TARGET_ENVIRONMENT}" ]; then
@@ -56,7 +57,22 @@ copy_cloud_config() {
     fi
 }
 
+copy_app_icon() {
+    local SOURCE="${APP_ICON_DIR}/${TARGET_ENVIRONMENT}AppIcon.appiconset"
+    local DESTINATION="${SRCROOT}/BetaProd/Assets.xcassets/AppIcon.appiconset"
+
+    if [ -d "${SOURCE}" ]; then
+        mkdir -p "${DESTINATION}"
+        cp "${SOURCE}"/*.* "${DESTINATION}"
+        touch "${DESTINATION}"/*.*
+    else
+        echo "error: Unsupported environment: ${TARGET_ENVIRONMENT}. Directory not found: ${SOURCE}"
+        exit 1
+    fi
+}
+
 copy_xcode_config
 copy_cloud_config
+copy_app_icon
 
 echo "Build set to ${TARGET_ENVIRONMENT} target environment!"
